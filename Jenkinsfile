@@ -1,4 +1,4 @@
-podTemplate(yaml: '''
+podTemplate(namespace: 'jenkins-ci', yaml: '''
     apiVersion: v1
     kind: Pod
     spec:
