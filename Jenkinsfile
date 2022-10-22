@@ -12,6 +12,10 @@ podTemplate(namespace: 'jenkins-ci', yaml: '''
         volumeMounts:
         - name: kaniko-secret
           mountPath: /kaniko/.docker
+        resources:
+          requests:
+            cpu: 200m
+            memory: 512Mi
       restartPolicy: Never
       volumes:
       - name: kaniko-secret
