@@ -32,7 +32,6 @@ jobs:
   publish-main:
     executor: docker-publisher
     steps:
-      - setup_remote_docker
       - attach_workspace:
           at: /tmp/workspace
       - setup_remote_docker
