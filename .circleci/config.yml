@@ -68,7 +68,7 @@ workflows:
               only: main
       - publish-main:
           requires:
-            - build
+            - build-main
           filters:
             branches:
               only: main
