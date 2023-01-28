@@ -21,7 +21,15 @@ jobs:
       - run:
           name: Build application Docker image
           command: |
-            docker build -t $IMAGE_NAME:latest -t $IMAGE_NAME:$CIRCLE_WORKFLOW_ID .
+            docker build -t $IMAGE_NAME:$CIRCLE_WORKFLOW_ID .
+    executor: docker-publisher
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Build application Docker image
+          command: |
+            docker build -t $IMAGE_NAME:latest .
       - run:
           name: Archive Docker image
           command: docker save -o image.tar $IMAGE_NAME
@@ -43,12 +51,20 @@ jobs:
           command: |
             echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
             docker push $IMAGE_NAME:latest
+            docker tag $IMAGE_NAME:$CIRCLE_WORKFLOW_ID $IMAGE_NAME:latest
+            docker push $IMAGE_NAME:$CIRCLE_WORKFLOW_ID
 
 workflows:
   version: 2
   build:
     jobs:
       - build
+  build-main:
+    jobs:
+      - build-main:
+          filters:
+            branches:
+              only: main
       - publish-main:
           requires:
             - build
