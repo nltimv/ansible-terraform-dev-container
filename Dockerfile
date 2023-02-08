@@ -21,6 +21,7 @@ RUN apt-get update \
         libffi-dev \
         libkrb5-dev \
         libssl-dev \
+        locales \
         lsb-release \
         net-tools \
         openssh-client \
@@ -65,5 +66,7 @@ RUN curl -O https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${T
     && chmod +x /usr/bin/packer
  
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+
+RUN locale-gen en_US.UTF-8
  
 CMD    ["/bin/bash"]
