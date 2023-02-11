@@ -3,7 +3,7 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV TF_VERSION 1.1.7
 ENV PACKER_VERSION 1.8.0
  
-ENV pip_packages "ansible cryptography pywinrm kerberos requests_kerberos passlib msrest PyVmomi pymssql"
+ENV pip_packages "ansible ansible-lint cryptography pywinrm kerberos requests_kerberos passlib msrest PyVmomi pymssql"
  
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
