@@ -23,6 +23,7 @@ RUN apt-get update \
         locales \
         lsb-release \
         net-tools \
+        openjdk-17-jre \
         openssh-client \
         python3-dev \
         python3-gssapi \
