@@ -1,7 +1,6 @@
 FROM ubuntu:jammy
 ENV DEBIAN_FRONTEND noninteractive
-ENV TF_VERSION 1.1.7
-ENV PACKER_VERSION 1.8.0
+ENV TF_VERSION 1.8.4
  
 ENV pip_packages "ansible ansible-lint cryptography pywinrm kerberos requests_kerberos passlib msrest PyVmomi pymssql"
  
@@ -51,21 +50,12 @@ RUN LATEST_COMPOSE_VERSION=$(curl -sSL "https://api.github.com/repos/docker/comp
     && chmod +x /usr/local/bin/docker-compose
  
 RUN pip install --upgrade pip \
-    && pip install $pip_packages \
-    && pip install ansible[azure] \
-    && ansible-galaxy collection install azure.azcollection community.general \
-    && pip install -r ~/.ansible/collections/ansible_collections/azure/azcollection/requirements-azure.txt
+    && pip install $pip_packages
  
 RUN curl -O https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip \
     && unzip terraform_${TF_VERSION}_linux_amd64.zip -d /usr/bin \
     && rm -f terraform_${TF_VERSION}_linux_amd64.zip \
-    && chmod +x /usr/bin/terraform \
-    && curl -O https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip \
-    && unzip packer_${PACKER_VERSION}_linux_amd64.zip -d /usr/bin \
-    && rm -f packer_${PACKER_VERSION}_linux_amd64.zip \
-    && chmod +x /usr/bin/packer
- 
-RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+    && chmod +x /usr/bin/terraform
 
 RUN locale-gen en_US.UTF-8
  
